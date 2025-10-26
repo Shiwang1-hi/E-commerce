@@ -1,4 +1,4 @@
-    import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const CartItem = ({ item, updateQty, removeFromCart }) => {
   return (

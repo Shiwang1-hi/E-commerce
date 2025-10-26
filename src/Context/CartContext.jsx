@@ -1,25 +1,37 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
+// ✅ Create Context
 export const CartContext = createContext();
 
-export const CartProvider = ({ children }) => {
+// ✅ Cart Provider Component
+const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
+  // 🛒 Add to Cart
   const addToCart = (product) => {
-    const existing = cart.find((item) => item.id === product.id);
-    if (existing) {
-      setCart(cart.map(item => item.id === product.id ? { ...item, qty: item.qty + 1 } : item));
-    } else {
-      setCart([...cart, { ...product, qty: 1 }]);
-    }
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prevCart.map((item) =>
+          item.id === product.id ? { ...item, qty: item.qty + 1 } : item
+        );
+      }
+      return [...prevCart, { ...product, qty: 1 }];
+    });
   };
 
+  // ❌ Remove from Cart
   const removeFromCart = (id) => {
-    setCart(cart.filter(item => item.id !== id));
+    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
+  // 🔄 Update Quantity
   const updateQty = (id, qty) => {
-    setCart(cart.map(item => item.id === id ? { ...item, qty } : item));
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id ? { ...item, qty: Math.max(qty, 1) } : item
+      )
+    );
   };
 
   return (
@@ -28,3 +40,5 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
+export default CartProvider;

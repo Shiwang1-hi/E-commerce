@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 const ProductCard = ({ product, addToCart }) => {
   return (
     <motion.div
-      whileHover={{ scale: 1.05 }}   // Slight zoom effect on hover
-      whileTap={{ scale: 0.95 }}     // Click effect
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
       className="card m-2"
       style={{ width: "18rem" }}
     >
